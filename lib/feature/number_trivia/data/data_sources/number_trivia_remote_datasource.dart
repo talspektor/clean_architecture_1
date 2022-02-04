@@ -1,3 +1,4 @@
+import 'package:clean_architecture_1/core/error/exception.dart';
 import 'package:clean_architecture_1/feature/number_trivia/domain/entities/number_trivia.dart';
 
 abstract class NumberTriviaRemoteDataSource {
