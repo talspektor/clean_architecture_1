@@ -20,7 +20,7 @@ dependencies:
   shared_preferences:
 
   cupertino_icons: ^1.0.2
-  # Open socket to check for network reachability
+  # Open socket to check for presentation reachability
   data_connection_checker: ^0.3.4
 
 dev_dependencies:
