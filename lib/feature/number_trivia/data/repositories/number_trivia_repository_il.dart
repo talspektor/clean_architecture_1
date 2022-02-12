@@ -37,22 +37,22 @@ class NumberTriviaRepositoryImpl implements NumberTriviaRepository {
 
   Future<Either<Failure, NumberTrivia>> _getTrivia(
       _ConcreteOrRandomChooser getConcreteOrRandom) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteTrivia = await getConcreteOrRandom();
-        localDataSource.cacheNumberTrivia(NumberTriviaModel(
-            text: remoteTrivia.text, number: remoteTrivia.number));
-        return Right(remoteTrivia);
-      } on ServerException {
-        return Left(ServerFailure(''));
-      }
-    } else {
-      try {
-        final localTrivia = await localDataSource.getLastNumberTrivia();
-        return Right(localTrivia);
-      } on CacheException {
-        return Left(CacheFailure(''));
-      }
+    // if (await networkInfo.isConnected) {
+    try {
+      final remoteTrivia = await getConcreteOrRandom();
+      localDataSource.cacheNumberTrivia(NumberTriviaModel(
+          text: remoteTrivia.text, number: remoteTrivia.number));
+      return Right(remoteTrivia);
+    } on ServerException {
+      return Left(ServerFailure(''));
     }
+    // } else {
+    try {
+      final localTrivia = await localDataSource.getLastNumberTrivia();
+      return Right(localTrivia);
+    } on CacheException {
+      return Left(CacheFailure(''));
+    }
+    // }
   }
 }

@@ -29,7 +29,7 @@ main() {
 
   runTextOnline(Function body) {
     group('device is online', () {
-      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      // when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
     });
 
     body();
@@ -37,7 +37,7 @@ main() {
 
   runTextOffline(Function body) {
     group('device is offline', () {
-      when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
+      // when(mockNetworkInfo.isConnected).thenAnswer((_) async => false);
     });
 
     body();
@@ -50,11 +50,11 @@ main() {
     const NumberTrivia tNUmberTrivia = tNumberTriviaNumber;
 
     test('should check if the device is online', () async {
-      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      // when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
 
       repository.getConcreteNumberTrivia(tNumber);
 
-      verify(mockNetworkInfo.isConnected);
+      // verify(mockNetworkInfo.isConnected);
     });
 
     runTextOnline(() {
@@ -119,11 +119,11 @@ main() {
     const NumberTrivia tNUmberTrivia = tNumberTriviaNumber;
 
     test('should check if the device is online', () async {
-      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      // when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
 
       repository.getRandomNumberTrivia();
 
-      verify(mockNetworkInfo.isConnected);
+      // verify(mockNetworkInfo.isConnected);
     });
 
     runTextOnline(() {

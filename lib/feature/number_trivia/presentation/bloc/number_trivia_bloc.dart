@@ -23,20 +23,20 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     required this.getNumberRandomTrivia,
     required this.inputConverter,
   }) : super(Empty()) {
-    on<GetTriviaForConcreteNumber>((event, emit) {
-      _onGetTriviaForConcreteNumber(event, emit);
+    on<GetTriviaForConcreteNumber>((event, emit) async {
+      await _onGetTriviaForConcreteNumber(event, emit);
     });
 
     on<GetTriviaFromRandomNumber>((event, emit) async {
-      _onGetTriviaFromRandomNumber(event, emit);
+      await _onGetTriviaFromRandomNumber(event, emit);
     });
   }
 
   _onGetTriviaForConcreteNumber(
-      GetTriviaForConcreteNumber event, Emitter<NumberTriviaState> emit) {
+      GetTriviaForConcreteNumber event, Emitter<NumberTriviaState> emit) async {
     final inputEither =
         inputConverter.stringToUnsignedInteger(event.numberString);
-    inputEither.fold((failure) {
+    await inputEither.fold((failure) {
       emit(Error(message: invalidInputFailure));
     }, (integer) async {
       emit(Loading());
@@ -55,9 +55,16 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
 
   _eitherLoadedOrErrorState(Either<Failure, NumberTrivia> failureOrTrivia,
       Emitter<NumberTriviaState> emit) {
-    failureOrTrivia.fold(
-        (failure) => emit(Error(message: _mapFailureToMessage(failure))),
-        (trivia) => emit(Loaded(trivia: trivia)));
+    if (failureOrTrivia.isLeft()) {
+      failureOrTrivia.leftMap(
+          (failure) => emit(Error(message: _mapFailureToMessage(failure))));
+    } else {
+      failureOrTrivia.foldRight(
+          NumberTrivia, (trivia, _) => emit(Loaded(trivia: trivia)));
+    }
+    // failureOrTrivia.fold(
+    //     (failure) => emit(Error(message: _mapFailureToMessage(failure))),
+    //     (trivia) => emit(Loaded(trivia: trivia)));
   }
 
   String _mapFailureToMessage(Failure failure) {

@@ -5,7 +5,7 @@ import 'package:clean_architecture_1/feature/number_trivia/data/data_sources/num
 import 'package:clean_architecture_1/feature/number_trivia/domain/usecases/get_concrete_number_tivia.dart';
 import 'package:clean_architecture_1/feature/number_trivia/domain/usecases/get_random_number_trivia.dart';
 import 'package:clean_architecture_1/feature/number_trivia/presentation/bloc/number_trivia_bloc.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
+// import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,17 +38,17 @@ initFeatures() {
   sl.registerLazySingleton<NumberTriviaRemoteDataSource>(
       () => NumberTriviaRemoteDataSourceImpl(sl()));
   sl.registerLazySingleton<NumberTriviaLocalDataSource>(
-      () => NumberTriviaLocalDataSourceImpl(sharedPreferences: sl()));
+      () => NumberTriviaLocalDataSourceImpl());
 }
 
 intCore() {
   sl.registerLazySingleton(() => InputConverter());
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
 }
 
 intExternals() async {
-  final sharedPreferences = await SharedPreferences.getInstance();
+  // final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton(() => DataConnectionChecker());
-  sl.registerLazySingleton(() => sharedPreferences);
+  // sl.registerLazySingleton(() => DataConnectionChecker());
+  // sl.registerLazySingleton(() => sharedPreferences);
 }

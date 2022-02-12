@@ -13,13 +13,13 @@ main() {
 
   group('getLastNumberTrivia', () {
     mockSharedPreferences = MockSharedPreferences();
-    dataSource = NumberTriviaLocalDataSourceImpl(
-        sharedPreferences: mockSharedPreferences);
-    
-    final tNumberTriviaModel = NumberTriviaModel.fromJson()
-    
-    test('should return NumberTrivia from SharedPreferences when there is one in the cache.',() async {
-      when()
-    });
+    // dataSource = NumberTriviaLocalDataSourceImpl(
+    //     sharedPreferences: mockSharedPreferences);
+    //
+    // final tNumberTriviaModel = NumberTriviaModel.fromJson()
+    //
+    // test('should return NumberTrivia from SharedPreferences when there is one in the cache.',() async {
+    //   when()
+    // });
   });
 }
